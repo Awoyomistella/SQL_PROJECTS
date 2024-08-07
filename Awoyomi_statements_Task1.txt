@@ -1,0 +1,910 @@
+TASK 1
+
+/***Creating the database***/
+Create database Child_Poverty;
+
+/***inbuilt schema is dbo***/
+
+
+/***Selecting the two tables from ethiopia and india***/
+Select * From [dbo].[ethiopia_constructed];
+Select * From [dbo].[india_constructed];
+
+/*** creating Table for Child_Identity_and_Location ***/
+Create Table dbo.Child_Identity_and_Location(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[clustid] [float] NULL,
+	[commid] [nvarchar](150) NULL,
+	[typesite] [float] NULL,
+	[region] [float] NULL,
+	[yc] [float] NULL,
+	[childloc] [float] NULL,
+	[inround] [float] NULL,
+	[panel] [float] NULL,
+	[deceased] [nvarchar](150) NULL,
+ Constraint [PK_Child_Identity_and_Location] Primary Key Clustered 
+(
+	[childid] asc,
+	[round] asc))
+Go
+
+/*** creating Table for Child_Anthropometric information ***/
+Create Table dbo.Child_Anthropometric(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chweight] [float] NULL,
+	[chheight] [float] NULL,
+	[bmi] [float] NULL,
+	[zwfa] [float] NULL,
+	[zhfa] [float] NULL,
+	[zbfa] [float] NULL,
+	[zwfl] [nvarchar](150) NULL,
+	[fwfa] [float] NULL,
+	[fhfa] [float] NULL,
+	[fbfa] [float] NULL,
+	[fwfl] [nvarchar](150) NULL,
+	[underweight] [float] NULL,
+	[stunting] [float] NULL,
+	[thinness] [float] NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_parent features ***/
+Create Table dbo.Child_Parent(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[dadid] [nvarchar](150) NULL,
+	[dadage] [nvarchar](150) NULL,
+	[dadlive] [nvarchar](150) NULL,
+	[dadyrdied] [nvarchar](150) NULL,
+	[dadcantread] [nvarchar](150) NULL,
+	[dadedu] [nvarchar](150) NULL,
+	[momid] [float] NULL,
+	[momedu] [float] NULL,
+	[momlive] [float] NULL,
+	[momage] [float] NULL,
+	[momcantread] [nvarchar](150) NULL,
+	[momyrdied] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child birth and immunisation ***/
+Create Table dbo.Birth_and_Immunisations(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[bwght] [nvarchar](150) NULL,
+	[bwdoc] [nvarchar](150) NULL,
+	[numante] [nvarchar](150) NULL,
+	[delivery] [nvarchar](150) NULL,
+	[tetanus] [nvarchar](150) NULL,
+	[bcg] [nvarchar](150) NULL,
+	[measles] [nvarchar](150) NULL,
+	[dpt] [nvarchar](150) NULL,
+	[polio] [nvarchar](150) NULL,
+	[hib] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child care giver information ***/
+Create Table dbo.Child_Caregiver_Info(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[careid] [float] NULL,
+	[caredu] [float] NULL,
+	[carehead] [float] NULL,
+	[careage] [float] NULL,
+	[caresex] [float] NULL,
+	[carerel] [float] NULL,
+	[carecantread] [nvarchar](150) NULL,
+	[careladder] [float] NULL,
+	[careldr4yrs] [float] NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_Education ***/
+Create Table dbo.Child_Educations(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[preprim] [float] NULL,
+	[agegr1] [float] NULL,
+	[enrol] [float] NULL,
+	[engrade] [float] NULL,
+	[entype] [float] NULL,
+	[hghgrade] [float] NULL,
+	[timesch] [float] NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_General_Features ***/
+Create Table dbo.Child_General_Feature(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chsex] [float] NULL,
+	[chlang] [float] NULL,
+	[chethnic] [float] NULL,
+	[chldrel] [float] NULL,
+	[agemon] [float] NULL,
+	[marrcohab] [nvarchar](150) NULL,
+	[marrcohab_age] [nvarchar](150) NULL,
+	[birth] [nvarchar](150) NULL,
+	[birth_age] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child Injury information ***/
+Create Table dbo.ChildInjury(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chmightdie] [nvarchar](150) NULL,
+	[chillness] [nvarchar](150) NULL,
+	[chinjury] [float] NULL,
+	[chhprob] [float] NULL,
+	[chdisability] [nvarchar](150) NULL,
+	[chdisscale] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child read and write features ***/
+Create Table dbo.ChildRead_and_Writes(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[levlread] [nvarchar](150) NULL,
+	[levlwrit] [nvarchar](150) NULL,
+	[literate] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_reproductive information ***/
+Create Table dbo.Child_Reproductive_Health(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chrephealth1] [nvarchar](150) NULL,
+	[chrephealth2] [nvarchar](150) NULL,
+	[chrephealth3] [nvarchar](150) NULL,
+	[chrephealth4] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_smoke and drink information ***/
+Create Table dbo.Child_Smokes_and_Drink(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chsmoke] [nvarchar](150) NULL,
+	[chalcohol] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_health and wellbeing ***/
+Create Table dbo.Child_Health_and_Wellbeing(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[chhrel] [float] NULL,
+	[chhealth] [nvarchar](150) NULL,
+	[cladder] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+/*** creating Table for Child_Time ***/
+Create Table dbo.Child_Time(
+	[childid] [nvarchar](150) NOT NULL,
+	[round] [float] NOT NULL,
+	[hsleep] [float] NULL,
+	[hcare] [float] NULL,
+	[hchore] [float] NULL,
+	[htask] [float] NULL,
+	[hwork] [float] NULL,
+	[hschool] [float] NULL,
+	[hstudy] [float] NULL,
+	[hplay] [float] NULL,
+	[commwork] [nvarchar](150) NULL,
+	[commsch] [nvarchar](150) NULL
+) On [PRIMARY]
+Go
+
+Alter Table dbo.Child_Anthropometric  With Check Add Constraint 
+[FK_Child_Anthropometric_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Anthropometric Check Constraint [FK_Child_Anthropometric_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Parent  With Check Add  Constraint 
+[FK_Child_Parent_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Parent Check Constraint [FK_Child_Parent_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Birth_and_Immunisations  With Check Add  Constraint 
+[FK_Birth_and_Immunisations_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Birth_and_Immunisations Check Constraint [FK_Birth_and_Immunisations_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Caregiver_Info  With Check Add  Constraint 
+[FK_Child_Caregiver_Info_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Caregiver_Info Check Constraint [FK_Child_Caregiver_Info_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Educations  With Check Add  Constraint 
+[FK_Child_Educations_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Educations Check Constraint [FK_Child_Educations_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_General_Feature With Check Add  Constraint 
+[FK_Child_General_Feature_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_General_Feature Check Constraint [FK_Child_General_Feature_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.ChildInjury With Check Add  Constraint 
+[FK_ChildInjury_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.ChildInjury Check Constraint [FK_ChildInjury_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.ChildRead_and_Writes  With Check Add  Constraint 
+[FK_ChildRead_and_Writes_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.ChildRead_and_Writes Check Constraint [FK_ChildRead_and_Writes_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Reproductive_Health  With Check Add  Constraint [FK_Child_Reproductive_Health_Child_Identity_and_Location]
+Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Reproductive_Health Check Constraint [FK_Child_Reproductive_Health_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Smokes_and_Drink  With Check Add  Constraint [FK_Child_Smokes_and_Drink_Child_Identity_and_Location]
+Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Smokes_and_Drink Check Constraint [FK_Child_Smokes_and_Drink_Child_Identity_and_Location]
+Go
+
+Alter Table dbo.Child_Health_and_Wellbeing  With Check Add  Constraint [FK_Child_Health_and_Wellbeing_Child_Identity_and_Location] 
+Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Health_and_Wellbeing Check Constraint [FK_Child_Health_and_Wellbeing_Child_Identity_and_Location]
+Go
+
+
+Alter Table dbo.Child_Time  With Check Add  Constraint [FK_Child_Time_Child_Identity_and_Location] Foreign Key([childid], [round])
+References dbo.Child_Identity_and_Location ([childid], [round])
+Go
+Alter Table dbo.Child_Time Check Constraint [FK_Child_Time_Child_Identity_and_Location]
+Go
+
+/***Inserting values into dbo.Child_Identity_and_Location for the two countries***/
+
+Insert into dbo.Child_Identity_and_Location([childid],[round],
+[clustid],[commid],[typesite],[region],[yc],
+[childloc],[inround],[panel],[deceased])
+Select Cast(childid as nvarchar(150)), Cast(round as float),
+Cast([clustid] as float), Cast([commid] as nvarchar(150)), 
+Cast([typesite] as float), Cast([region] as float), Cast(yc as float),
+Cast(childloc as float), Cast([inround] as float),
+Cast([panel] as float), Cast([deceased] as nvarchar(150)) 
+From dbo.ethiopia_constructed
+
+Insert into dbo.Child_Identity_and_Location([childid],[round],
+[clustid],[commid],[typesite],[region],[yc],
+[childloc],[inround],[panel],[deceased])
+Select Cast(childid as nvarchar(150)), Cast(round as float),
+Cast([clustid] as float), Cast([commid] as nvarchar(150)), 
+Cast([typesite] as float), Cast([region] as float), Cast(yc as float),
+Cast(childloc as float), Cast([inround] as float),
+Cast([panel12345] as float), Cast([deceased] as nvarchar(150)) 
+From dbo.india_constructed
+
+Select * From dbo.Child_Identity_and_Location
+
+
+/***Inserting values into dbo.Child_General_Feature for the two countries***/
+
+Insert into dbo.Child_General_Feature(childid,chsex,chlang,chethnic,
+chldrel,agemon,marrcohab,marrcohab_age,birth,birth_age,round)
+Select Cast (childid as nvarchar(255)),Cast(chsex as float),
+Cast(chlang as float),Cast(chethnic as float),
+Cast(chldrel as float),Cast(agemon as float),
+Cast(marrcohab as nvarchar(255)),Cast(marrcohab_age as nvarchar(255)),
+Cast(birth as nvarchar(255)),Cast(birth_age as nvarchar(255)),Cast(round as float)
+From dbo.ethiopia_constructed
+
+Insert into dbo.Child_General_Feature(childid,chsex,chlang,chethnic,
+chldrel,agemon,marrcohab,marrcohab_age,birth,birth_age,round)
+Select Cast (childid as nvarchar(255)),Cast(chsex as float),
+Cast(chlang as float),Cast(chethnic as float),
+Cast(chldrel as float),Cast(agemon as float),
+Cast(marrcohab as nvarchar(255)),Cast(marrcohab_age as nvarchar(255)),
+Cast(birth as nvarchar(255)),Cast(birth_age as nvarchar(255)),Cast(round as float)
+From dbo.india_constructed
+
+Select * From dbo.Child_General_Feature
+
+/***Inserting values into dbo.Child_Anthropometric for the two countries***/
+
+Insert into dbo.Child_Anthropometric (childid,chweight,chheight,bmi,zwfa,zhfa,
+zbfa,zwfl,fwfa,fhfa,fbfa,fwfl,underweight,stunting,thinness,round)
+Select Cast (childid as nvarchar(150)),Cast(chweight as float),
+Cast(chheight as float),Cast(bmi as float),
+Cast(zwfa as float),Cast(zhfa as float),
+Cast(zbfa as float),Cast(zwfl as nvarchar(150)),
+Cast(fwfa as float),Cast(fhfa as float),Cast(fbfa as float),
+Cast(fwfl as nvarchar(150)),Cast(underweight as float),
+Cast(stunting as float),Cast(thinness as float),Cast(round as float)
+From dbo.india_constructed
+
+Insert into dbo.Child_Anthropometric (childid,chweight,chheight,bmi,zwfa,zhfa,
+zbfa,zwfl,fwfa,fhfa,fbfa,fwfl,underweight,stunting,thinness,round)
+Select Cast (childid as nvarchar(150)),Cast(chweight as float),
+Cast(chheight as float),Cast(bmi as float),
+Cast(zwfa as float),Cast(zhfa as float),
+Cast(zbfa as float),Cast(zwfl as nvarchar(150)),
+Cast(fwfa as float),Cast(fhfa as float),Cast(fbfa as float),
+Cast(fwfl as nvarchar(150)),Cast(underweight as float),
+Cast(stunting as float),Cast(thinness as float),Cast(round as float)
+From dbo.ethiopia_constructed
+
+Select * From dbo.Child_Anthropometric
+
+/***Inserting values into dbo.Birth_and_Immunisations for the two countries***/
+
+Insert into dbo.Birth_and_Immunisations(childid,round,[bwght],[bwdoc],
+[tetanus],[delivery],[bcg],[measles],[polio],[dpt],[hib])
+Select Cast (childid as nvarchar(150)),Cast(round as float),Cast([bwght] as nvarchar(150)),
+Cast([bwdoc] as nvarchar(150)),
+Cast([tetanus] as nvarchar(150)),Cast( [delivery] as nvarchar(150)),
+Cast([bcg] as nvarchar(150)),Cast( [measles] as nvarchar(150)),
+Cast([polio] as nvarchar(150)),Cast([dpt] as nvarchar(150)),
+Cast([hib] as nvarchar(150))
+From dbo.ethiopia_constructed
+
+Insert into dbo.Birth_and_Immunisations(childid,round,[bwght],[bwdoc],
+[tetanus],[delivery],[bcg],[measles],[polio],[dpt],[hib])
+Select Cast (childid as nvarchar(150)),Cast(round as float),Cast([bwght] as nvarchar(150)),
+Cast([bwdoc] as nvarchar(150)),
+Cast([tetanus] as nvarchar(150)),Cast( [delivery] as nvarchar(150)),
+Cast([bcg] as nvarchar(150)),Cast( [measles] as nvarchar(150)),
+Cast([polio] as nvarchar(150)),Cast([dpt] as nvarchar(150)),
+Cast([hib] as nvarchar(150))
+From dbo.india_constructed
+
+Select * From dbo.Birth_and_Immunisations
+
+/***Inserting values into dbo.ChildInjury for the two countries***/
+
+Insert into dbo.ChildInjury(
+childid,chmightdie,chillness,chinjury,chhprob,
+chdisability,chdisscale,round)
+Select Cast(childid as nvarchar(150)),Cast(chmightdie as nvarchar(150)),
+Cast(chillness as nvarchar(150)),Cast(chinjury as float),
+Cast(chhprob as float),Cast(chdisability as nvarchar(150)),
+Cast(chdisscale as nvarchar(150)),Cast(round as float)
+From dbo.ethiopia_constructed
+
+Insert into dbo.ChildInjury(
+childid,chmightdie,chillness,chinjury,chhprob,
+chdisability,chdisscale,round)
+Select Cast(childid as nvarchar(150)),Cast(chmightdie as nvarchar(150)),
+Cast(chillness as nvarchar(150)),Cast(chinjury as float),
+Cast(chhprob as float),Cast(chdisability as nvarchar(150)),
+Cast(chdisscale as nvarchar(150)),Cast(round as float)
+From dbo.india_constructed
+
+Select * From dbo.ChildInjury
+
+/***Inserting values into dbo.Child_Smokes_and_Drink***/
+Insert into dbo.Child_Smokes_and_Drink(
+childid,chsmoke,chalcohol,round)
+Select Cast(childid as nvarchar(150)), Cast(chsmoke as nvarchar(150)),
+Cast(chalcohol as nvarchar(150)),Cast(round as float)
+From dbo.ethiopia_constructed
+
+Insert into dbo.Child_Smokes_and_Drink(
+childid,chsmoke,chalcohol,round)
+Select Cast(childid as nvarchar(150)), Cast(chsmoke as nvarchar(150)),
+Cast(chalcohol as nvarchar(150)),Cast(round as float)
+From dbo.india_constructed
+
+Select * From dbo.Child_Smokes_and_Drink
+
+/***Inserting values into dbo.Child_Health_and_Wellbeing***/
+
+Insert into dbo.Child_Health_and_Wellbeing (
+childid,chhrel,chhealth,cladder,round)
+Select Cast(childid as nvarchar(150)),Cast(chhrel as float),
+Cast(chhealth as nvarchar(150)),Cast(cladder as nvarchar(150)),
+Cast(round as float) From dbo.ethiopia_constructed
+
+Insert into dbo.Child_Health_and_Wellbeing (
+childid,chhrel,chhealth,cladder,round)
+Select Cast(childid as nvarchar(150)),Cast(chhrel as float),
+Cast(chhealth as nvarchar(150)),Cast(cladder as nvarchar(150)),
+Cast(round as float) From dbo.india_constructed
+
+Select * From dbo.Child_Health_and_Wellbeing
+
+/***Inserting values into dbo.Child_Time for the two countries***/
+
+Insert into dbo.Child_Time(
+childid,round,hsleep,hcare,hchore,htask,hwork,
+hschool,hstudy,hplay,commwork,commsch)
+Select Cast(childid as nvarchar(150)),Cast(round as float),
+Cast(hsleep as float),Cast(hcare as float),
+Cast(hchore as float),Cast(htask as float),
+Cast(hwork as float),Cast(hschool as float),
+Cast(hstudy as float),Cast(hplay as float),
+Cast(commwork as nvarchar(150)), Cast(commsch as nvarchar(150))
+From dbo.ethiopia_constructed
+
+
+Insert into dbo.Child_Time(
+childid,round,hsleep,hcare,hchore,htask,hwork,
+hschool,hstudy,hplay,commwork,commsch)
+Select Cast(childid as nvarchar(150)),Cast(round as float),
+Cast(hsleep as float),Cast(hcare as float),
+Cast(hchore as float),Cast(htask as float),
+Cast(hwork as float),Cast(hschool as float),
+Cast(hstudy as float),Cast(hplay as float),
+Cast(commwork as nvarchar(150)), Cast(commsch as nvarchar(150))
+From dbo.india_constructed
+
+Select * From dbo.Child_Time
+
+/***Inserting values into dbo.ChildRead_and_Writes for the two countries***/
+
+Insert into dbo.ChildRead_and_Writes(
+childid,levlread,levlwrit,literate,round)
+Select Cast(childid as nvarchar(150)), Cast(levlread as nvarchar(150)),
+Cast(levlwrit as nvarchar(150)),Cast(literate as nvarchar(150)),
+Cast(round as float) From dbo.ethiopia_constructed
+
+
+Insert into dbo.ChildRead_and_Writes(
+childid,levlread,levlwrit,literate,round)
+Select Cast(childid as nvarchar(150)), Cast(levlread as nvarchar(150)),
+Cast(levlwrit as nvarchar(150)),Cast(literate as nvarchar(150)),
+Cast(round as float) From dbo.india_constructed
+
+Select * From dbo.ChildRead_and_Writes
+
+/***Inserting values into dbo.Child_Caregiver_Info for the two countries***/
+
+Insert into dbo.Child_Caregiver_Info(childid,careid,careage,caresex,carehead,
+carerel,carecantread,caredu,careladder,careldr4yrs,round)
+Select Cast (childid as nvarchar(150)),Cast(careid as float),
+Cast(careage as float),
+Cast(caresex as float), Cast(carehead as float),
+Cast(carerel as float),Cast(carecantread as nvarchar(150)),
+Cast(caredu as float), Cast(careladder as float),
+Cast(careldr4yrs as float),
+Cast(round as float)
+From dbo.ethiopia_constructed
+
+Insert into dbo.Child_Caregiver_Info(childid,careid,careage,caresex,carehead,
+carerel,carecantread,caredu,careladder,careldr4yrs,round)
+Select Cast (childid as nvarchar(150)),Cast(careid as float),
+Cast(careage as float),
+Cast(caresex as float), Cast(carehead as float),
+Cast(carerel as float),Cast(carecantread as nvarchar(150)),
+Cast(caredu as float), Cast(careladder as float),
+Cast(careldr4yrs as float),
+Cast(round as float)
+From dbo.india_constructed
+
+Select * From dbo.Child_Caregiver_Info
+
+/***Inserting values into dbo.Child_Parent for the two countries***/
+
+Insert into dbo.Child_Parent (
+childid,dadid,dadage,dadlive,dadyrdied,dadcantread,dadedu,momid,
+momage,momlive,momyrdied,momcantread,momedu,round)
+Select Cast(childid as nvarchar(150)),Cast(dadid as tinyint),
+Cast(dadage as nvarchar(150)),Cast(dadlive as nvarchar(150)),
+Cast(dadyrdied as nvarchar(150)),Cast(dadcantread as nvarchar(150)),
+Cast(dadedu as nvarchar(150)),Cast(momid as float),
+Cast(momage as float),Cast(momlive as float),
+Cast(momyrdied as nvarchar(150)),Cast(momcantread as nvarchar(150)),
+Cast(momedu as float),Cast(round as float)
+From dbo.ethiopia_constructed
+
+Insert into dbo.Child_Parent (
+childid,dadid,dadage,dadlive,dadyrdied,dadcantread,dadedu,momid,
+momage,momlive,momyrdied,momcantread,momedu,round)
+Select Cast(childid as nvarchar(150)),Cast(dadid as tinyint),
+Cast(dadage as nvarchar(150)),Cast(dadlive as nvarchar(150)),
+Cast(dadyrdied as nvarchar(150)),Cast(dadcantread as nvarchar(150)),
+Cast(dadedu as nvarchar(150)),Cast(momid as float),
+Cast(momage as float),Cast(momlive as float),
+Cast(momyrdied as nvarchar(150)),Cast(momcantread as nvarchar(150)),
+Cast(momedu as float),Cast(round as float)
+From dbo.india_constructed
+
+Select * From dbo.Child_Parent
+
+/***Creating view for child health history ***/
+Create view dbo.vChild_Health_History
+As
+(Select a.childid,a.round,
+Region = case /***For region of residence of 2 countries***/ 
+when a.region = 1 then 'Tigray in Ethiopia'
+when a.region = 2 then 'Afar in Ethiopia'
+when a.region =	3 then 'Amhara in Ethiopia'
+when a.region =	4 then 'Oromiya in Ethiopia'
+when a.region = 5 then 'Somali in Ethiopia'
+when a.region = 6 then 'Benshangul Gumz in Ethiopia'
+when a.region = 7 then 'SNNP in Ethiopia'
+when a.region = 12 then 'Gambela in Ethiopia'
+when a.region =	13 then 'Harari in Ethiopia'
+when a.region = 14 then 'Addis Ababa City Administration in Ethiopia'
+when a.region = 15 then 'Dire Dawa City Administration in Ethiopia'
+when a.region = 24 then 'Others in India'
+when a.region =	23 then 'Telangana in India'
+when a.region =	77 then 'Not known'
+when a.region  = 22 then 'Rayalaseema in India'
+when a.region =	21 then 'Coastal Andhra in India'
+else 'Not Stated'
+end,
+Location = case /***For area of residence urban/rural***/
+when a.typesite = 1 then 'Urban'
+when a.typesite = 2 then 'Rural'
+when a.typesite = 77 then 'Not known'
+end,
+Gender = case /***For gender type***/
+when f.chsex = 1 then 'Male'
+when f.chsex = 2 then 'Female'
+else 'Not Stated'
+end,
+ChildSmokes = case   /***Child's frequency of smoking***/
+when b.chsmoke = 1 then 'Every day'
+when b.chsmoke = 2 then 'At least once a week'
+when b.chsmoke = 3 then 'At least once a month'
+when b.chsmoke = 4 then 'Hardly ever'
+when b.chsmoke = 5 then 'I never smoke cigarettes'
+else 'Not Stated'
+end,
+ChildDrinks = case /***Child consume alcohol everyday or at least once a week***/ 
+when b.chalcohol = 0 then 'No'
+when b.chalcohol = 1 then 'Yes'
+else 'Not Stated'
+end,
+ChildHealth = case /***Child's health in general***/ 
+when c.chhealth = 1 then 'Very poor'
+when c.chhealth = 2 then 'Poor'
+when c.chhealth = 3 then 'Average'
+when c.chhealth = 4 then 'Good' 
+when c.chhealth = 5 then 'Very good'
+else 'Not Stated'
+end,
+ChildMightDie = case /***Child has had serious injury/illness***/ 
+when d.chmightdie = 0 then 'no'
+when d.chmightdie = 1 then 'yes'
+else 'Not Stated'
+end
+from dbo.Child_Identity_and_Location a
+left join Child_Smokes_and_Drink b on b.childid=a.childid and b.round=a.round
+left join Child_Health_and_Wellbeing c on c.childid=a.childid and c.round=a.round
+left join ChildInjury d on d.childid=a.childid and d.round=a.round
+left join Child_General_Feature f on f.childid=a.childid and f.round=a.round)
+Go
+Select * From dbo.vChild_Health_History
+
+/***Creating a view for child, parent and carer education level***/
+Create view dbo.vGenEducationHistory
+As
+Select a.childid,a.round, 
+CountryRegion = case /***For region of residence of 2 countries***/ 
+when a.region = 1 then 'Tigray in Ethiopia'
+when a.region = 2 then 'Afar in Ethiopia'
+when a.region =	3 then 'Amhara in Ethiopia'
+when a.region =	4 then 'Oromiya in Ethiopia'
+when a.region = 5 then 'Somali in Ethiopia'
+when a.region = 6 then 'Benshangul Gumz in Ethiopia'
+when a.region = 7 then 'SNNP in Ethiopia'
+when a.region = 12 then 'Gambela in Ethiopia'
+when a.region =	13 then 'Harari in Ethiopia'
+when a.region = 14 then 'Addis Ababa City Administration in Ethiopia'
+when a.region = 15 then 'Dire Dawa City Administration in Ethiopia'
+when a.region = 24 then 'Others in India'
+when a.region =	23 then 'Telangana in India'
+when a.region =	77 then 'Not known'
+when a.region  = 22 then 'Rayalaseema in India'
+when a.region =	21 then 'Coastal Andhra in India'
+
+else 'Not Stated'
+end,
+[Location] = case /***For area of residence urban/rural***/
+when a.typesite = 1 then 'Urban'
+when a.typesite = 2 then 'Rural'
+when a.typesite = 77 then 'Not known'
+end,
+Gender = case /***For gender type***/
+when f.chsex = 1 then 'Male'
+when f.chsex = 2 then 'Female'
+else 'Not Stated'
+end,
+Enrollment = case /***Child is currently enrolled in school***/
+when b.enrol = 0 then 'No'
+when b.enrol = 1 then 'Yes'
+when b.enrol = 99 then 'Missing'
+when b.enrol = 77 then 'Not Known'
+when b.enrol = 88 then 'N/A'
+else 'Not Stated'
+end,
+ChildReadLevel = case /***Child read level***/
+when c.levlread =  1 then 'Cant read anything'
+when c.levlread =	2 then 'Reads letters'
+when c.levlread = 3 then 'Reads word'
+when c.levlread = 4 then 'Reads sentence'
+when c.levlread = 79 then 'Refused to answer'
+else 'Not Stated'
+end,
+ChildWriteLevel = case /***Child write level***/
+when c.levlwrit = 1 then 'No'
+when c.levlwrit =2 then 'Yes with difficulty or errors'
+when c.levlwrit = 3 then 'Yes without difficulty or errors' 
+when c.levlwrit = 79 then 'Refused to answer'
+else 'Not Stated'
+end,
+ChildLiterate = case /***Child can read and write a sentence without difficulties***/
+when c.literate = 0 then 'No'
+when c.literate = 1 then 'Yes'
+else 'Not Stated'
+end,
+CarerEducation = case /***Caregiver's level of education***/
+when d.caredu = 0 then 'None'
+when d.caredu =	1 then 'Grade 1'
+when d.caredu =	2 then 	'Grade 2'
+when d.caredu =	3 then 'Grade 3'
+when d.caredu =	4 then 'Grade 4'
+when d.caredu =	5 then 'Grade 5'
+when d.caredu =	6 then 'Grade 6'
+when d.caredu =	7 then 'Grade 7'
+when d.caredu =	8 then 'Grade 8'
+when d.caredu =	9 then 'Grade 9'
+when d.caredu =	10 then 'Grade 10'
+when d.caredu =	11 then 'Grade 11'
+when d.caredu =	12 then 'Grade 12'
+when d.caredu =	13 then 'Post-secondary/vocational'
+when d.caredu =	14 then 'University'
+when d.caredu =	15 then 'Masters, doctorate'
+when d.caredu =	16 then 'University (complete)'
+when d.caredu =	28 then 'Adult literacy'
+when d.caredu =	29 then 'Religious education'
+when d.caredu =	30 then 'Other'
+else 'Not Stated'
+end,
+FatherEducation = case /***Father's level of education***/
+when e.dadedu = 0 then 'None'
+when e.dadedu = 1 then 'Grade 1'
+when e.dadedu = 2 then 'Grade 2'
+when e.dadedu = 3 then 'Grade 3'
+when e.dadedu = 4 then 'Grade 4'
+when e.dadedu = 5 then 'Grade 5'
+when e.dadedu = 6 then 'Grade 6'
+when e.dadedu = 7 then 'Grade 7'
+when e.dadedu = 8 then 'Grade 8'
+when e.dadedu = 9 then 'Grade 9'
+when e.dadedu = 10	then 'Grade 10'
+when e.dadedu = 11	then 'Grade 11'
+when e.dadedu = 12	then 'Grade 12'
+when e.dadedu = 13	then '(Post-secondary, vocational/Technical college)/
+						PE(Technical Incomplete)'
+when e.dadedu = 14	then '(University)/
+						PE(Technical Complete)'
+when e.dadedu = 15	then '(Masters, doctorate)/
+						PE(Uni Incomplete)'
+when e.dadedu = 16 then 'PE(Uni Complete)'
+when e.dadedu = 28 then 'Adult literacy'
+when e.dadedu = 29 then 'Religious education'	 
+when e.dadedu = 30 then 'Other'
+else 'Not Stated'
+end,
+MotherEducation = case /***Mother's level of education***/
+when e.momedu = 0 then 'None'
+when e.momedu = 1 then 'Grade 1'
+when e.momedu = 2 then 'Grade 2'
+when e.momedu = 3 then 'Grade 3'
+when e.momedu = 4 then 'Grade 4'
+when e.momedu = 5 then 'Grade 5'
+when e.momedu = 6 then 'Grade 6'
+when e.momedu = 7 then 'Grade 7'
+when e.momedu = 8 then 'Grade 8'
+when e.momedu = 9 then 'Grade 9'
+when e.momedu = 10	then 'Grade 10'
+when e.momedu = 11	then 'Grade 11'
+when e.momedu = 12	then 'Grade 12'
+when e.momedu = 13	then '(Post-secondary, vocational/Technical college)/
+						PE(Technical Incomplete)'
+when e.momedu = 14	then '(University)/
+						PE(Technical Complete)'
+when e.momedu = 15	then '(Masters, doctorate)/
+						PE(Uni Incomplete)'
+when e.momedu = 16 then 'PE(Uni Complete)'
+when e.momedu = 28 then 'Adult literacy'
+when e.momedu = 29 then 'Religious education'	 
+when e.momedu = 30 then 'Other'
+else 'Not Stated'
+end
+From Child_Identity_and_Location a
+Left join Child_Educations b on b.childid=a.childid and b.round = a.round
+Left join ChildRead_and_Writes c on c.childid = a.childid and c.round=a.round
+Left join Child_Caregiver_Info d on d.childid = a.childid and d.round=a.round
+Left join Child_Parent e on e.childid=a.childid and e.round=a.round
+Left join Child_General_Feature f on f.childid=a.childid and f.round=a.round
+Go
+
+Select * From dbo.vGenEducationHistory
+
+/***Creating a view for child general information***/
+Create view dbo.vChildGenInfo
+As
+Select a.childid,a.round,
+CountryRegion = case /***For region of residence of 4 countries***/ 
+when a.region = 1 then 'Tigray in Ethiopia'
+when a.region = 2 then 'Afar in Ethiopia'
+when a.region =	3 then 'Amhara in Ethiopia'
+when a.region =	4 then 'Oromiya in Ethiopia'
+when a.region = 5 then 'Somali in Ethiopia'
+when a.region = 6 then 'Benshangul Gumz in Ethiopia'
+when a.region = 7 then 'SNNP in Ethiopia'
+when a.region = 12 then 'Gambela in Ethiopia'
+when a.region =	13 then 'Harari in Ethiopia'
+when a.region = 14 then 'Addis Ababa City Administration in Ethiopia'
+when a.region = 15 then 'Dire Dawa City Administration in Ethiopia'
+when a.region = 24 then 'Others in India'
+when a.region =	23 then 'Telangana in India'
+when a.region =	77 then 'Not known'
+when a.region  = 22 then 'Rayalaseema in India'
+when a.region =	21 then 'Coastal Andhra in India'
+else 'Not Stated'
+end,
+[Location] = case /***For area of residence urban/rural***/
+when a.typesite = 1 then 'Urban'
+when a.typesite = 2 then 'Rural'
+when a.typesite = 77 then 'Not known'
+end,
+ChildHealth = case /***Child's health in general***/ 
+when c.chhealth = 1 then 'Very poor'
+when c.chhealth = 2 then 'Poor'
+when c.chhealth = 3 then 'Average'
+when c.chhealth = 4 then 'Good' 
+when c.chhealth = 5 then 'Very good'
+else 'Not Stated'
+end,
+ChildReadLevel = case /***Child read level***/
+when d.levlread =  1 then 'Cant read anything'
+when d.levlread =	2 then 'Reads letters'
+when d.levlread = 3 then 'Reads word'
+when d.levlread = 4 then 'Reads sentence'
+when d.levlread = 79 then 'Refused to answer'
+else 'Not Stated'
+end,
+ChildWriteLevel = case /***Child write level***/
+when d.levlwrit = 1 then 'No'
+when d.levlwrit =2 then 'Yes with difficulty or errors'
+when d.levlwrit = 3 then 'Yes without difficulty or errors' 
+when d.levlwrit = 79 then 'Refused to answer'
+else 'Not Stated'
+end,
+ChildLiterate = case /***Child can read and write a sentence without difficulties***/
+when d.literate = 0 then 'No'
+when d.literate = 1 then 'Yes'
+else 'Not Stated'
+end,
+Gender = case /***For gender type***/
+when f.chsex = 1 then 'Male'
+when f.chsex = 2 then 'Female'
+else 'Not Stated'
+end
+From dbo.Child_Identity_and_Location a
+Left join dbo.Child_General_Feature f on f.childid=a.childid and f.round=a.round
+left join Child_Health_and_Wellbeing c on c.childid=a.childid and c.round=a.round
+Left join ChildRead_and_Writes d on c.childid = a.childid and c.round=a.round
+Go
+select * from dbo.vChildGenInfo
+
+/*** create View for general Education Analysis***/
+Create view dbo.vEducationAnalysis As
+Select childid,round,CountryRegion,[Location],Gender,Enrollment,
+ChildReadLevel,ChildWriteLevel,ChildLiterate,
+CarerEducation,FatherEducation,MotherEducation
+From dbo.vGenEducationHistory
+
+select * from dbo.vEducationAnalysis
+
+/***create View for child Health Analysis***/
+Create view dbo.vHealthAnalysis As
+Select childid,round,[Location],Gender,
+ChildSmokes,ChildDrinks,ChildMightDie
+From dbo.vChild_Health_History
+
+select * from dbo.vHealthAnalysis
+
+/***Stored Procedures and Groupby***/
+Create Procedure dbo.ChildEnrollment
+@REGION as nvarchar (100),
+@Enrol as nvarchar (10),
+@Sex as nvarchar (10),
+@CurrentEnrol as nvarchar(100),
+@ReadStatus as nvarchar (50),
+@WriteStatus as nvarchar (50)
+As
+Select Gender,[Location],Enrollment,CountryRegion,ChildWriteLevel,ChildReadLevel, 
+count (*) As Result From dbo.vEducationAnalysis
+Where CountryRegion=@REGION and Enrollment=@Enrol and Gender=@Sex 
+and ChildWriteLevel=@WriteStatus
+Group By Gender,[Location],Enrollment,CountryRegion,ChildWriteLevel,ChildReadLevel
+
+
+/***Creating functions based on the cohort types***/
+Create function dbo.Cohorts (@youngeroldercohort as bit)
+Returns table
+As
+Return
+(
+	Select a.childid, a.round, a.yc, b.CarerEducation, 
+	Y_C = case
+	When a.yc = 0 then 'older'
+	When a.yc = 1 then 'younger'
+	else null
+	end, b.CountryRegion, count (*) As Total
+	From Child_Identity_and_Location a left join
+	dbo.vEducationAnalysis b on b.childid=a.childid and b.round=a.round 
+	Where yc = @youngeroldercohort
+	Group by a.childid,a.round,b.CountryRegion, b.CarerEducation,a.yc
+	Order by childid, round offset 0 rows
+	)
+Go
+Select * From dbo.Cohorts(1) 
+Select * From dbo.Cohorts(0) 
+
+
+/***counts the total number of residents in different areas, then groups them by their typesite***/
+Select count(*) as 'Total Number of Residents', typesite
+from dbo.india_constructed
+group by typesite;
+
+/***counts the total number of residents in different areas, then groups them by their typesite***/
+Select count(*) as 'Total Number of Residents', typesite
+from dbo.ethiopia_constructed
+group by typesite;
+
+
+/***Enforcing security for HOD of departments***/
+/***Education HOD only***/
+Create role EducationHOD
+Grant select, insert, update on dbo.vGenEducationHistory to
+EducationHOD
+
+
+/***Health HOD only***/
+Create role HealthHOD
+Grant select, insert, update on [dbo].[vChild_Health_History] to
+HealthHOD
+
+/***creating Full Backup Database***/
+Backup Database Child_Poverty 
+To Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Child_Poverty.bak'
+Go
+
+/** Restoring Database***/
+Use [master]
+Restore Database Child_Poverty
+From Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Child_Poverty.bak'
+Go
+
+
+

@@ -1,0 +1,246 @@
+
+TASK 2
+
+/***Creating the database***/
+Create database Vietnamdb;
+
+/***inbuilt schema is dbo***/
+
+/***Selecting all columns in vietnam_wave_1***/
+select * from [dbo].[vietnam_wave_1]
+
+/***Creating table for Student Identifiers***/
+Select UNIQUEID,SCHOOLID,CLASSID,
+STUDENTID,YLCHILDID,PROVINCE,DISTRICTCODE,LOCALITY
+Into dbo.StudentIdentifiers
+From dbo.vietnam_wave_1
+
+Select * From dbo.StudentIdentifiers
+
+/***Creating table for Student Questionnaire***/
+Select UNIQUEID,STUDENTID,GENDER,AGE
+,ETHNICITY,ABSENT_DAYS,MOM_READ,MOM_EDUC,DAD_READ
+,DAD_EDUC,STDYLCHD,STDDINT
+Into dbo.StudentQuestionaire
+From dbo.vietnam_wave_1
+
+Select * From dbo.StudentQuestionaire
+
+/***Creating table for Student Cognitive tests***/
+Select STUDENTID,ENG_TEST,Math_Rawscore,
+ENG_RAWSCORE, MATH_TEST
+Into dbo.StudentCognitivetests 
+From dbo.vietnam_wave_1
+
+Select * From dbo.StudentCognitivetests
+
+/***Creating table for Student Gender***/
+Create Table dbo.StudentGender(
+GENDER int,
+GENDER_TYPE nvarchar(8) not null 
+);
+
+
+/***Inserting Into the Gender table***/
+Insert Into dbo.StudentGender(GENDER , GENDER_TYPE)
+values(1, 'Male'),
+      (2, 'Female')
+
+
+/***Creating table for the Ethnicity Identity***/
+Create Table dbo.StudentEthnicity(
+ETHNICITYID int,
+ETHNICITY_NAME nvarchar(10)
+);
+
+
+/***Inserting Into the Ethnicity table***/
+Insert Into dbo.StudentEthnicity(ETHNICITYID , ETHNICITY_NAME)
+values(1 , 'Kinh'),
+      (2 ,'H’Mong'),
+      (3,'Cham-HRoi'),
+      (4,'Ede'),
+      (5, 'Ba Na'),
+      (6, 'Nung'),
+	  (7,'Tay'),
+      (8, 'Dao'),
+      (9, 'Giay'),
+      (10, 'Other')
+
+Select * From dbo.StudentEthnicity
+
+/***Creating table for Student Locality types***/
+Create Table dbo.StudentLocality(
+LOCALITYID int,
+LOCALITY_TYPE nvarchar(10) not null
+);
+
+/***Inserting Into the Student Locality table***/
+Insert Into dbo.StudentLocality(LOCALITYID , LOCALITY_TYPE)
+values(1, 'Rural'),
+      (2, 'Urban')
+
+Select * From dbo.StudentLocality
+
+/***Creating a table Student Province***/
+Create Table dbo.StudentProvince(
+PROVINCE int,
+PROVINCE_NAME nvarchar(10) not null
+);
+
+/***Inserting Into the Student Province table***/
+Insert Into dbo.StudentProvince(PROVINCE , PROVINCE_NAME)
+values(1,'Ben Tre'),
+      (2 ,'Da Nang'),
+	  (3, 'Hung Yen'),
+	  (4,'Lao Cai'),
+      (5, 'Phu Yen')
+
+Select * From dbo.StudentProvince
+
+
+
+/***create view for Student Identifier***/
+create view dbo.vStudentIdentifiers as
+Select a.UNIQUEID,a.SCHOOLID,a.CLASSID,
+a.STUDENTID,a.YLCHILDID,a.PROVINCE,a.DISTRICTCODE,
+c.PROVINCE_NAME
+From dbo.StudentIdentifiers a
+Left join dbo.StudentProvince c on c.PROVINCE=a.PROVINCE
+
+Select * From dbo.vStudentIdentifiers
+
+/***Creating a view for Inequality_in_the_Education_Sector_in_Vietnamfrom vietnam_wave_1 table***/
+Create View dbo.vInequality_in_the_Education_Sector
+as
+
+Select uniqueid,
+Case gender
+When 1.0 then 'Male'
+else 'Female'
+end as 'Gender',
+Case ethnicity
+When 1.0 then 'Kinh'
+When 2.0 then 'Hmong'
+When 3.0 then 'cham-HRoi'
+When 4.0 then 'Ede'
+When 5.0 then 'Ba na'
+When 6.0 then 'Nung'
+When 7.0 then 'Tay'
+When 8.0 then 'Dao'
+When 9.0 then 'Giay'
+else 'Others'
+end as 'Ethnicity',
+Case province
+When 1.0 then 'Ben Tre'
+When 2.0 then 'Dan Nang'
+When 3.0 then 'Hung Yen'
+When 4.0 then 'Lao Cai'
+When 5.0 then 'Phu Yen'
+else 'Unknown'
+end as 'Province',
+Case locality
+When 1.0 then 'Rural'
+When 2.0 then 'Urban'
+else 'Unknown'
+end as 'School Location',
+Case sthvchr 
+When 0.0 then 'No'
+else 'Yes'
+end as 'Have Study Chair at Home',
+Case sthvlamp
+When 0.0 then 'No'
+else 'Yes'
+end as 'Have Study Lamp at Home',
+Case stitmow5
+When 0.0 then 'No'
+else 'Yes'
+end as 'Student has School Bag',
+Case stitmow6
+When 0.0 then 'No'
+else 'yes'
+end as 'Student has Ruler',
+Case stitmow8 
+When 0.0 then 'No'
+else 'yes'
+end as 'Student has Pocket Calculator',
+Case sthvcomp
+When 0.0 then 'No'
+else 'yes'
+end as 'Have Computer/Laptop at Home',
+Case sthvintr
+When 0.0 then 'No'
+else 'yes'
+end as 'Have Internet at Home',
+Case scavlb5
+When 0.0 then 'No'
+else 'Yes'
+end as 'School have Books',
+Case scavlb10
+When 0.0 then 'No'
+else 'yes'
+end as 'School have IT Facilities',
+Case scavlb3
+When 0.0 then 'No'
+else 'Yes'
+end as 'Teacher has desk',
+Case scavlb4
+When 0.0 then 'No'
+else 'Yes'
+end as 'Teacher has chair',
+Case httypsch
+When 1.0 then 'Government'
+When 2.0 then 'Private'
+When 3.0 then 'Other'
+else 'Unknown'
+end as 'Type of School'
+from dbo.vietnam_wave_1
+
+Select * From dbo.vInequality_in_the_Education_Sector
+
+/***Viewing the number of Province using group by and count***/ 
+create view dbo.vprovince
+as
+Select PROVINCE_NAME As Province, (Count(PROVINCE_NAME)) As Number_of_Province 
+From  dbo.vStudentIdentifiers
+Group By PROVINCE_NAME  
+
+select * from dbo.vprovince
+
+/***View for Student Grades***/
+Create View dbo.vGrade As
+Select b.SCHOOLID,b.STUDENTID,b.CLASSID, 
+c.Math_Rawscore As MATH_RAWSCORE,c.ENG_RAWSCORE
+From 
+dbo.vStudentIdentifiers b,
+dbo.StudentCognitivetests c
+
+select * from dbo.vGrade
+
+
+/***Stored Procedure for finding Student Province***/
+Create Procedure dbo.ProvinceFinder
+@PROVINCE_NAME nvarchar (30) = null
+As
+	Select UNIQUEID,PROVINCE_NAME From dbo.vStudentIdentifiers Where isnull 
+	(@PROVINCE_NAME,PROVINCE_NAME) = PROVINCE_NAME
+
+	Execute dbo.ProvinceFinder @PROVINCE_NAME ='Hung Yen'
+
+/***creating Full Backup Database***/
+Backup Database Vietnamdb 
+To Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Vietnamdb.bak'
+Go
+
+/** Restoring Database***/
+Use [master]
+Restore Database Vietnamdb
+From Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\Vietnamdb.bak'
+Go
+
+
+
+
+
+
+

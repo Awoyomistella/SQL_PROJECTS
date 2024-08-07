@@ -1,0 +1,173 @@
+TASK 3
+
+/***Creating the database for ManchesterCrime***/
+Create Database ManchesterCrime
+
+/***inbuilt schema is dbo***/
+
+/***Creating and joining all the crime data from 01-2017 to 12-2018 using union all***/
+Select * into dbo.All_Crimes
+From [dbo].['2017-01-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-02-greater-manchester-stre$'] Union All
+Select * From [dbo].['2017-03-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-04-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-05-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-06-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-07-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-08-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-09-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-10-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2017-11-gloucestershire-street$'] Union All 
+Select * From [dbo].['2017-12-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-01-gloucestershire-street$'] Union All 
+Select * From [dbo].['2018-02-greater-manchester-stre$'] Union All  
+Select * From [dbo].['2018-03-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-04-gloucestershire-street$'] Union All 
+Select * From [dbo].['2018-05-gloucestershire-street$'] Union All 
+Select * From [dbo].['2018-06-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-07-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-08-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-09-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-10-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-11-greater-manchester-stre$'] Union All 
+Select * From [dbo].['2018-12-greater-manchester-stre$'];
+
+/***Viewing the joined table created***/
+Select * From dbo.All_Crimes
+
+/***Adding a Geolocation column to the  all crime table***/
+Alter Table dbo.All_Crimes
+Add [Geolocation] Geography;
+
+/***Adding an ID column to the table and setting as primary key***/
+Alter Table  dbo.All_Crimes
+Add ID Int Identity;
+
+/***Setting a primary key to the added ID column***/
+Alter Table dbo.All_Crimes
+Add Constraint PK_ID Primary Key Nonclustered (ID);
+Go
+
+/***Creating a geography point using Latitude and Longitude columns***/
+Update dbo.All_Crimes
+Set [GeoLocation] = Geography::Point([Latitude], [Longitude], 4326)
+Where [Longitude] IS NOT NULL and [Latitude] IS NOT NULL
+Go
+
+/***Creating a new table using join***/
+Select a.[ID], a.[Crime ID], a.[Month], a.[Reported by], a.[Falls within], a.[Longitude], a.[Latitude], 
+a.[Location], a.[Geolocation], a.[Crime type], a.[LSOA name],a.[Last outcome category], a.[Context], b.[All Ages]
+Into dbo.New_Crimee
+From dbo.All_Crimes a
+join [dbo].['mid person$'] b on b.[Area Codes]= a.[LSOA code]
+
+Select * From [dbo].['mid person$']
+Select * From dbo.New_Crimee 
+
+/***View for Robbery in greater manchester***/
+Create View dbo.vRobbery
+with schemabinding
+As
+Select [ID], [Crime ID],Location, Geolocation,[Crime type],[LSOA name] From dbo.New_Crimee
+Where [Crime type] = 'Robbery'
+And [GeoLocation] Is not Null
+
+Select * From dbo.vRobbery
+
+/***view to visualise the Anti-Social Behaviour in Salford***/
+Create View dbo.vAnti_behaviour_Salford
+with schemabinding
+As
+Select [ID], [Crime ID],Location, Geolocation,[Crime type],[LSOA name] From dbo.New_Crimee
+Where [Crime type] = 'Anti-social behaviour' and [LSOA name] like 'Salford%'
+And [GeoLocation] Is not Null
+
+Select * From  dbo.vAnti_behaviour_Salford
+
+ 
+ /*** view for Vehicle Crime in greater manchester ***/
+Create View dbo.vVehicle_Crime
+with schemabinding
+As
+Select [ID],[Crime ID],Location, Geolocation,[Crime type],[LSOA name] From dbo.New_Crimee
+Where [Crime type] = 'Vehicle Crime'
+And [GeoLocation] Is not Null
+
+Select * From dbo.vVehicle_Crime
+
+/***View for Public order in greater manchester***/
+Create View dbo.vPublic_Order
+with schemabinding
+As
+Select [ID], [Crime ID],Location, Geolocation,[Crime type],[LSOA name] From dbo.New_Crimee
+Where [Crime type] = 'Public order'
+And [GeoLocation] Is not Null
+
+Select * From dbo.vPublic_Order
+
+/***View for Possession of weapons***/
+Create View dbo.vPossession_Of_Weapons
+with schemabinding
+As
+Select [ID], [Crime ID],Location, Geolocation,[Crime type],[LSOA name] From dbo.New_Crimee
+Where [Crime type] = 'Possession of weapons'
+And [GeoLocation] Is not Null
+
+Select * From dbo.vPossession_Of_Weapons
+
+/***Create indexes for all the newly created Views***/
+CREATE UNIQUE CLUSTERED INDEX idx_id ON dbo.vRobbery(ID)
+GO
+CREATE UNIQUE CLUSTERED INDEX idx_id ON dbo.vAnti_behaviour_Salford(ID)
+GO
+CREATE UNIQUE CLUSTERED INDEX idx_id ON dbo.vVehicle_Crime(ID)
+GO
+CREATE UNIQUE CLUSTERED INDEX idx_id ON dbo.vPublic_Order(ID)
+GO
+CREATE UNIQUE CLUSTERED INDEX idx_id ON dbo.vPossession_Of_Weapons(ID)
+GO
+
+/***Creating a stored procedure to count crime type committed in 2017***/
+Create Procedure dbo.Crime_2017
+  @crime NVARCHAR(100)
+as
+Select [Month] as months,
+Count
+(Case When [Crime type] = @crime then 1
+end) CrimeCount
+From dbo.New_Crimee
+Where [Crime type] = @crime AND [Month] like '%2017%'
+Group By [Month]
+Order By [Month]
+Go
+
+/***Executing the procedure***/
+Execute dbo.Crime_2017 @crime = 'Possession of weapons'
+
+/***Creating a stored procedure to count crime type committed in 2018***/
+Create Procedure dbo.Crime_2018
+  @crime NVARCHAR(100)
+as
+Select [Month] as months,
+Count
+(Case When [Crime type] = @crime then 1
+end) CrimeCount
+From dbo.New_Crimee
+Where [Crime type] = @crime AND [Month] like '%2018%'
+Group By [Month]
+Order By [Month]
+Go
+
+/***Executing the procedure***/
+Execute dbo.Crime_2018 @crime = 'Vehicle Crime'
+
+/***creating Full Backup Database***/
+Backup Database ManchesterCrime
+To Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\ManchesterCrime.bak'
+Go
+
+/** Restoring Database***/
+Use [master]
+Restore Database ManchesterCrime
+From Disk = 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup\ManchesterCrime.bak'
+Go
